@@ -44,6 +44,13 @@ db_file=~/printer_data/database/moonraker-sql.db
 #####################################################################
 ################ !!! DO NOT EDIT BELOW THIS LINE !!! ################
 #####################################################################
+
+# Function to exclude specific files (e.g., .zip and dated configs)
+exclude_files(){
+  echo "Excluding unwanted files..."
+  find "$config_folder" -type f \( -name "*.zip" -o -name "printer-*.cfg" \) -exec rm -v {} \;
+}
+
 grab_version(){
   if [ ! -z "$klipper_folder" ]; then
     klipper_commit=$(git -C $klipper_folder describe --always --tags --long | awk '{gsub(/^ +| +$/,"")} {print $0}')
@@ -63,27 +70,20 @@ grab_version(){
   fi
 }
 
-# Here we copy the sqlite database for backup
-# To RESTORE the database, stop moonraker, then use the following command:
-# cp ~/printer_data/config/moonraker-sql.db ~/printer_data/database/
-# Finally, restart moonraker
-
+# Backup the SQLite database file
 if [ -f $db_file ]; then
    echo "sqlite based history database found! Copying..."
-   cp ~/printer_data/database/moonraker-sql.db ~/printer_data/config/
+   cp "$db_file" "$config_folder/"
 else
    echo "sqlite based history database not found"
 fi
 
-# To fully automate this and not have to deal with auth issues, generate a legacy token on Github
-# then update the command below to use the token. Run the command in your base directory and it will
-# handle auth. This should just be executed in your shell and not committed to any files or
-# Github will revoke the token. =)
-# git remote set-url origin https://XXXXXXXXXXX@github.com/EricZimmerman/Voron24Configs.git/
-# Note that that format is for changing things after the repository is in use, vs initially
+# Exclude unwanted files before pushing to Git
+exclude_files
 
+# Push configuration files to Git
 push_config(){
-  cd $config_folder
+  cd "$config_folder"
   git pull origin $branch --no-rebase
   git add .
   current_date=$(date +"%Y-%m-%d %T")
@@ -93,3 +93,4 @@ push_config(){
 
 grab_version
 push_config
+

@@ -65,8 +65,8 @@ if [ "$1" == "install" ]; then
     read -rn 1 -s
     echo "Installing custom mcu.py file..."
     # change the 'TRSYNC_TIMEOUT = 0.025' line to 'TRSYNC_TIMEOUT = 0.05'
-    sed -i 's/TRSYNC_TIMEOUT = 0.025/TRSYNC_TIMEOUT = 0.05/g' ~/klipper/klippy/mcu.py
-    if grep -q "TRSYNC_TIMEOUT = 0.05" ~/klipper/klippy/mcu.py; then
+    sed -i 's/TRSYNC_TIMEOUT = 0.025/TRSYNC_TIMEOUT = 0.05/g' /home/bradmin/klipper/klippy/mcu.py
+    if grep -q "TRSYNC_TIMEOUT = 0.05" /home/bradmin/klipper/klippy/mcu.py; then
         echo -e "\e[32mPatch installed successfully\e[0m"
     else
         echo -e "\e[31mPatch install failed!\e[0m"
@@ -78,18 +78,18 @@ fi
 if [ "$1" == "update" ]; then
     echo "Updating klipper repo and restoring custom mcu.py file..."
     # save the custom mcu.py file
-    cp ~/klipper/klippy/mcu.py /tmp/mcu.py
+    cp /home/bradmin/klipper/klippy/ /tmp/mcu.py
     # remove the custom mcu.py file
-    rm ~/klipper/klippy/mcu.py
-    cd ~/klipper || exit
+    rm /home/bradmin/klipper/klippy/mcu.py
+    cd /home/bradmin/klipper || exit
     # update the klipper repo
     git pull
     # restore the custom mcu.py file
-    cp /tmp/mcu.py ~/klipper/klippy/mcu.py
+    cp /tmp/mcu.py /home/bradmin/klipper/klippy/mcu.py
     # remove the backed up custom mcu.py file
     rm /tmp/mcu.py
     # Report success or failure
-    if grep -q "TRSYNC_TIMEOUT = 0.05" ~/klipper/klippy/mcu.py; then
+    if grep -q "TRSYNC_TIMEOUT = 0.05" /home/bradmin/klipper/klippy/mcu.py; then
         echo -e "\e[32mUpdated successfully\e[0m"
     else
         echo -e "\e[31mUpdate failed\e[0m"
@@ -104,14 +104,14 @@ if [ "$1" == "remove" ]; then
     read -rn 1 -s
     echo "Removing custom mcu.py file..."
     # remove the custom mcu.py file
-    rm ~/klipper/klippy/mcu.py
+    rm /home/bradmin/klipper/klippy/mcu.py
     # collect the latest mcu.py file from the klipper repo
-    curl -o ~/klipper/klippy/mcu.py https://raw.githubusercontent.com/Klipper3d/klipper/master/klippy/mcu.py
+    curl -o /home/bradmin/klipper/klippy/mcu.py https://raw.githubusercontent.com/Klipper3d/klipper/master/klippy/mcu.py
     # update the klipper repo
-    cd ~/klipper || exit
+    cd /home/bradmin/klipper || exit
     git pull
     # Report success or failure
-    if grep -q "TRSYNC_TIMEOUT = 0.025" ~/klipper/klippy/mcu.py; then
+    if grep -q "TRSYNC_TIMEOUT = 0.025" /home/bradmin/klipper/klippy/mcu.py; then
         echo -e "\e[32mRemoved patch successfully\e[0m"
     else
         echo -e "\e[31mRemoving patch failed!\e[0m"
@@ -126,15 +126,15 @@ if [ "$1" == "patch" ]; then
     read -rn 1 -s
     echo "Patching mcu.py file..."
     # remove the custom mcu.py file
-    rm ~/klipper/klippy/mcu.py
+    rm /home/bradmin/klipper/klippy/mcu.py
     # collect the latest mcu.py file from the klipper repo
-    curl -o ~/klipper/klippy/mcu.py https://raw.githubusercontent.com/Klipper3d/klipper/master/klippy/mcu.py
+    curl -o /home/bradmin/klipper/klippy/mcu.py https://raw.githubusercontent.com/Klipper3d/klipper/master/klippy/mcu.py
     # update the klipper repo
-    cd ~/klipper || exit
+    cd /home/bradmin/klipper || exit
     git pull
     # change the 'TRSYNC_TIMEOUT = 0.025' line to 'TRSYNC_TIMEOUT = 0.05'
     sed -i 's/TRSYNC_TIMEOUT = 0.025/TRSYNC_TIMEOUT = 0.05/g' ~/klipper/klippy/mcu.py
-    if grep -q "TRSYNC_TIMEOUT = 0.05" ~/klipper/klippy/mcu.py; then
+    if grep -q "TRSYNC_TIMEOUT = 0.05" /home/bradmin/klipper/klippy/mcu.py; then
         echo -e "\e[32mUpdated and patched successfully\e[0m"
     else
         echo -e "\e[31mFile patching failed!\e[0m"
@@ -145,7 +145,7 @@ fi
 if [ "$1" == "check" ]; then
     echo "Checking mcu.py file..."
     # check if the 'TRSYNC_TIMEOUT = 0.05' line exists
-    if grep -q "TRSYNC_TIMEOUT = 0.05" ~/klipper/klippy/mcu.py; then
+    if grep -q "TRSYNC_TIMEOUT = 0.05" /home/bradmin/klipper/klippy/mcu.py; then
         echo -e "\e[32mmcu.py file has been patched\e[0m"
     else
         echo -e "\e[31mmcu.py file has not been patched\e[0m"

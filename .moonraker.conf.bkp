@@ -13,11 +13,14 @@ cors_domains =
 	http://my.mainsail.xyz
 	http://*.local
 	http://*.lan
+	http://*.mruniverse.ca
+	https://*.mruniverse.ca
 trusted_clients = 
 	10.0.0.0/8
 	127.0.0.0/8
 	169.254.0.0/16
 	172.16.0.0/12
+	172.0.0.0/12
 	192.168.0.0/16
 	100.0.0.0/8
 	FE80::/10
@@ -113,4 +116,8 @@ origin = https://github.com/andrewmcgr/klipper_tmc_autotune.git
 managed_services = klipper
 primary_branch = main
 install_script = install.sh
+
+[spoolman]
+server = https://Sparky06757:lht3100575@lester.mruniverse.ca
+sync_rate = 5
 

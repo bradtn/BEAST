@@ -117,7 +117,3 @@ managed_services = klipper
 primary_branch = main
 install_script = install.sh
 
-[spoolman]
-server = https://Sparky06757:lht3100575@lester.mruniverse.ca
-sync_rate = 5
-
